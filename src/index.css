@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .bg-brand-color {
+    background-color: #9118b6;
+  }
+  .bg-brand-color-alt {
+    background-color: #7948d2;
+  }
+
+  .bg-brand-color-100 {
+    background-color: #911806;
+  }
+  .text-brand-color {
+    color: #9118b6;
+  }
+
+  .border-brand-color {
+    border-color: #9118b6;
+  }
+
+  .rounded-4xl {
+    border-radius: 2.5rem;
+  }
+  .rounded-tr-4xl {
+    border-top-right-radius: 2.5rem;
+  }
+  .rounded-tl-4xl {
+    border-top-left-radius: 2.5rem;
+  }
+}
+
+@layer utilities {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
