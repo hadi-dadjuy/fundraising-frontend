@@ -1,7 +1,7 @@
 const erc20 = {
   _format: "hh-sol-artifact-1",
   contractName: "IERC20",
-  sourceName: "contracts/Token/IERC20.sol",
+  sourceName: "contracts/token/IERC20.sol",
   abi: [
     {
       anonymous: false,
@@ -13,7 +13,7 @@ const erc20 = {
           type: "address",
         },
         {
-          indexed: false,
+          indexed: true,
           internalType: "address",
           name: "spender",
           type: "address",
@@ -34,13 +34,13 @@ const erc20 = {
         {
           indexed: true,
           internalType: "address",
-          name: "sender",
+          name: "src",
           type: "address",
         },
         {
           indexed: true,
           internalType: "address",
-          name: "receiver",
+          name: "dst",
           type: "address",
         },
         {
@@ -192,4 +192,5 @@ const erc20 = {
   linkReferences: {},
   deployedLinkReferences: {},
 };
+
 export default erc20;

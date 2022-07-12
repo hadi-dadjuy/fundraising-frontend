@@ -62,36 +62,42 @@ class Timer extends Component {
     return (
       <>
         <div className="flex flex-wrap   my-10 mx-auto z-30 relative gap-4 rounded-3xl   w-11/12 sm:w-10/12 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4">
-          <div className="text-2xl col-span-4 font-extrabold 	uppercase text-gray-100 w-full text-center ">
+          <div className="text-2xl col-span-4 font-extrabold tracking-widest	uppercase text-gray-100 w-full text-center font-dosis font-extrabold ">
             Sale ends in
           </div>
 
           <div className=" flex-1  mb-2 rounded-3xl p-2    bg-gradient-to-bl from-[#a201ff] to-fuchsia-900 drop-shadow-2xl">
-            <div className=" text-white text-center  p-1 text-lg">Days</div>
-            <div className="text-gray-100 text-center  px-auto py-4 text-5xl font-bold  ">
+            <div className=" text-white text-center  p-1 text-lg font-dosis font-extrabold">
+              Days
+            </div>
+            <div className="text-gray-100 text-center  px-auto py-4 text-5xl font-bold  font-dosis font-extrabold">
               {days}
             </div>
           </div>
 
           <div className=" flex-1  mb-2 rounded-3xl p-2  bg-gradient-to-bl from-[#a201ff] to-fuchsia-900  drop-shadow-2xl">
-            <div className=" text-white text-center p-1 text-lg ">Hours</div>
-            <div className="text-gray-100 text-center  px-auto py-4 text-5xl font-bold    ">
+            <div className=" text-white text-center p-1 text-lg font-dosis font-extrabold">
+              Hours
+            </div>
+            <div className="text-gray-100 text-center  px-auto py-4 text-5xl font-bold  font-dosis font-extrabold  ">
               {hours}
             </div>
           </div>
 
           <div className="flex-1   mb-2 rounded-3xl p-2  bg-gradient-to-bl from-[#a201ff] to-fuchsia-900  drop-shadow-2xl">
-            <div className=" text-white text-center p-1 text-lg ">Minutes</div>
-            <div className="text-gray-100   text-center px-auto py-4 text-5xl font-bold ">
+            <div className=" text-white text-center p-1 text-lg font-dosis font-extrabold">
+              Minutes
+            </div>
+            <div className="text-gray-100   text-center px-auto py-4 text-5xl font-bold font-dosis font-extrabold">
               {minutes}
             </div>
           </div>
 
           <div className="w-fill flex-1   mb-2 rounded-3xl p-2   bg-gradient-to-bl from-[#a201ff] to-fuchsia-900  drop-shadow-2xl">
-            <div className=" text-white text-center  p-1 text-lg ">
+            <div className=" text-white text-center  p-1 text-lg font-dosis font-extrabold">
               Sesconds
             </div>
-            <div className=" text-gray-100 text-center  px-auto py-4 text-5xl font-bold ">
+            <div className=" text-gray-100 text-center  px-auto py-4 text-5xl font-bold font-dosis font-extrabold">
               {seconds}
             </div>
           </div>
