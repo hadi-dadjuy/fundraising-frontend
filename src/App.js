@@ -1,17 +1,29 @@
 import Navbar from "./components/Navbar";
-import Main from "./components/Main";
+import Deposit from "./components/Deposit";
+import Claim from "./components/Claim";
+
 import HParticles from "./components/HParticles";
 import Timer from "./components/Timer";
 import { useMetaMask } from "metamask-react";
-import { getSaleRemainingTime } from "./blockchain/Vault";
+import { getSaleRemainingTime } from "./blockchain/TokenPool";
 import { useEffect, useState } from "react";
-import { vaultAddress } from "./blockchain/addresses";
+import { tokenPoolAddress } from "./blockchain/Addresses";
+import { Spinner } from "./components/Spinner";
 
 export default function App() {
   const [period, setPeriod] = useState(0);
+  const [spinner, setSpinner] = useState(false);
+  const [isDeposit, setIsDeposit] = useState(true);
+  const setSpinnerState = (value) => {
+    setSpinner(value);
+  };
+
+  const setFormState = () => {
+    setIsDeposit(!isDeposit);
+  };
 
   useEffect(() => {
-    getSaleRemainingTime(vaultAddress).then((value) => {
+    getSaleRemainingTime(tokenPoolAddress).then((value) => {
       setPeriod(value);
       // setBalance(value);
       // expected output: "Success!"
@@ -31,8 +43,14 @@ export default function App() {
       className="container-full mx-auto bg-gray-300 min-h-screen relative overflow-hidden 
     bg-gradient-to-tr from-[#9A28DC] to-fuchsia-700 "
     >
+      <Spinner status={spinner} />
       <Navbar />
-      <Main />
+      {isDeposit === true ? (
+        <Deposit showSpinner={setSpinnerState} toggleFormState={setFormState} />
+      ) : (
+        <Claim showSpinner={setSpinnerState} toggleFormState={setFormState} />
+      )}
+
       <Timer startDate={new Date().getTime() + period * 1000} />
       <div className="absolute w-full h-full">
         <HParticles />

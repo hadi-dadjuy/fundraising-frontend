@@ -47,7 +47,7 @@ const Navbar = (props) => {
             activeLinkStyle
           }
         >
-          <a href="#">IBCO</a>
+          <a href="#">IDO</a>
         </div>
         <div
           className="font-dosis font-semibold tracking-wide text-lg md:text-2xl sm:text-xl px-4 hover:text-white

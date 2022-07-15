@@ -1,4 +1,4 @@
-import erc20 from "./abis/IERC20";
+import erc20 from "./abis/IERC20_Schema";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { ethers } from "ethers";
 
@@ -47,3 +47,5 @@ const toWei = (value) => {
   );
   return value.substring(0, value.length - 2);
 };
+
+
