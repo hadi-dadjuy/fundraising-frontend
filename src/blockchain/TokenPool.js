@@ -24,6 +24,7 @@ export const getVaultContract = async () => {
 
 export const getSaleRemainingTime = async () => {
   const contract = await getVaultContract();
+  console.log(contract);
   const salePeriod = await contract.getSaleRemainingTime();
   return salePeriod.toNumber();
 };
@@ -31,6 +32,10 @@ export const getSaleRemainingTime = async () => {
 export const deposit = async (value) => {
   const contract = await getVaultContract();
   return await contract.deposit(toWei(value));
+};
+export const getClaimAmount = async (value) => {
+  const contract = await getVaultContract();
+  return await contract.getClaimAmount();
 };
 
 export const claim = async () => {
@@ -40,6 +45,11 @@ export const claim = async () => {
 export const endSale = async () => {
   const contract = await getVaultContract();
   return await contract.endSale();
+};
+
+export const startSale = async () => {
+  const contract = await getVaultContract();
+  console.log(await contract.startSale());
 };
 
 export const withdraw = async (acc) => {
@@ -72,13 +82,6 @@ export const getUserInfo = async () => {
   const info = await contract.getUserInfo();
   return info;
 };
-
-export const getUserStatus = async () => {
-  const contract = await getVaultContract();
-  const result = await contract.getUserStatus();
-  return result;
-};
-
 export const getCurrentRewardBalance = async () => {
   const contract = await getVaultContract();
 

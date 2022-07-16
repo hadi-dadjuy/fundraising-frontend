@@ -5,13 +5,17 @@ export const Spinner = (props) => {
   return (
     <div
       role="status"
-      className="bg-zinc-700 opacity-95 w-screen h-screen mx-auto my-auto flex fixed z-50"
+      className="bg-zinc-700 opacity-95 w-screen h-screen mx-auto my-auto flex flex-col fixed z-50"
     >
+      <div className="text-center text-4xl text-white pt-16">
+        You wil be asked to sign{" "}
+        <span className="font-bold text-amber-600">2</span> messages ...
+      </div>
       <svg
         aria-hidden="true"
         className="mx-auto my-auto w-1/6 h-1/6 text-white animate-spin	
         text-center dark:text-gray-600 fill-fuchsia-800 ralative z-50"
-        viewBox="0 0 100 101"
+        viewBox="5 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >

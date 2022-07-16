@@ -95,7 +95,7 @@ class Timer extends Component {
 
           <div className="w-fill flex-1   mb-2 rounded-3xl p-2   bg-gradient-to-bl from-[#a201ff] to-fuchsia-900  drop-shadow-2xl">
             <div className=" text-white text-center  p-1 text-lg font-dosis font-extrabold">
-              Sesconds
+              Seconds
             </div>
             <div className=" text-gray-100 text-center  px-auto py-4 text-5xl font-bold font-dosis font-extrabold">
               {seconds}

@@ -24,6 +24,7 @@ export default function App() {
 
   useEffect(() => {
     getSaleRemainingTime(tokenPoolAddress).then((value) => {
+      console.log(value);
       setPeriod(value);
       // setBalance(value);
       // expected output: "Success!"
@@ -48,7 +49,11 @@ export default function App() {
       {isDeposit === true ? (
         <Deposit showSpinner={setSpinnerState} toggleFormState={setFormState} />
       ) : (
-        <Claim showSpinner={setSpinnerState} toggleFormState={setFormState} />
+        <Claim
+          showSpinner={setSpinnerState}
+          toggleFormState={setFormState}
+          remainig={period}
+        />
       )}
 
       <Timer startDate={new Date().getTime() + period * 1000} />

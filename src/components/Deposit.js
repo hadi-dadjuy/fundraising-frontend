@@ -5,23 +5,15 @@ import { useEffect, useState, useRef } from "react";
 import { splitNumber } from "../utils.js";
 
 import React from "react";
-import {
-  daiAddress,
-  rewardAddress,
-  tokenPoolAddress,
-} from "../blockchain/Addresses";
+import { daiAddress, tokenPoolAddress } from "../blockchain/Addresses";
 
 import { getBalance, approve } from "../blockchain/ERC20Permit";
 import {
   deposit,
-  claim,
-  endSale,
-  withdraw,
   getAssetRewardBalance,
   getAssetBalance,
   getCurrentAssetBalance,
-  getCurrentRewardBalance,
-  getUserStatus,
+  getUserInfo,
 } from "../blockchain/TokenPool";
 
 export default function Deposit(props) {
@@ -29,10 +21,8 @@ export default function Deposit(props) {
   const [daiBalance, setDaiBalance] = useState(0);
   const [assetBalance, setAssetBalance] = useState(0);
   const [currentAssetBalance, setCurrentAssetBalance] = useState(0);
-  const [currentRewardBalance, setCurrentRewardBalance] = useState(0);
   const [assetRewardBalance, setAssetRewardBalance] = useState(0);
   const [userStatus, setUserStatus] = useState(0);
-  const [poolBalance, setPoolBalance] = useState("100%");
   const inputPay = useRef(null);
   useEffect(() => {
     getBalance(daiAddress, account).then((value) => {
@@ -50,32 +40,18 @@ export default function Deposit(props) {
       setCurrentAssetBalance(value);
     });
 
-    getCurrentRewardBalance().then((value) => {
-      setCurrentRewardBalance(value);
-    });
-    getUserStatus().then((value) => {
-      setUserStatus(value);
+    getUserInfo().then((value) => {
+      setUserStatus(value.userStatus);
     });
     if (userStatus > 0) {
       props.showSpinner(false);
     }
 
-    const setPoolBalancePct = () => {
-      let poolPct =
-        ((currentAssetBalance + currentRewardBalance) /
-          (assetBalance + assetRewardBalance)) *
-        100;
-      if (isNaN(poolPct)) {
-        poolPct = 0;
-      }
-
-      setPoolBalance(parseFloat(poolPct).toFixed(2) + "%");
-    };
-    setPoolBalancePct();
     return () => {
       // this now gets called when the component unmounts
     };
   }, [
+    props,
     account,
     assetBalance,
     assetRewardBalance,
@@ -98,20 +74,25 @@ export default function Deposit(props) {
       if (value < 1) {
         alert("Amount entered is less than minimum value ( 1 DAI ).");
       }
-      props.showSpinner(true);
 
-      if (userStatus == 0) {
+      if (userStatus === 0) {
+        props.showSpinner(true);
         try {
           let result = await approve(daiAddress, tokenPoolAddress, value);
           let receipt = await result.wait();
+          console.log(result, receipt.logs[0].topics);
           if (receipt.status === 1) {
             result = await deposit(value);
             receipt = await result.wait();
             if (receipt.status === 1) {
               alert("You successfuly deposited " + value + " DAI");
+              inputPay.current.value = "0.0";
+
+              setUserStatus(1);
               props.showSpinner(false);
             }
           }
+          props.showSpinner(false);
         } catch (e) {
           alert("Transaction failed, try again.");
           props.showSpinner(false);
@@ -132,7 +113,7 @@ export default function Deposit(props) {
 
   const depositedBtn = (
     <button
-      disabled={userStatus === 1}
+      disabled={userStatus >= 1}
       type="button"
       className="font-dosis cursor-not-allowed	uppercase font-semibold tracking-widest mt-4 p-4 text-gray-100 text-lg w-full duration-200 
          rounded-full bg-gradient-to-bl from-[#6d5d76] to-[#874da8] drop-shadow-2xl"
@@ -152,7 +133,7 @@ export default function Deposit(props) {
             className="text-center text-sm px-4 py-3 cursor-pointer rounded-xl  bg-gray-200"
             onClick={props.toggleFormState}
           >
-            &nbsp;&nbsp;&nbsp;Claim
+            &nbsp;&nbsp;Claim&nbsp;&nbsp;
           </span>
         </div>
       </div>
@@ -170,6 +151,7 @@ export default function Deposit(props) {
 
               <div className="">
                 <input
+                  disabled={userStatus >= 1}
                   type="number"
                   min="0"
                   step="0.0001"
@@ -197,25 +179,10 @@ export default function Deposit(props) {
           </span>
           <div className="flex mt-2 items-center bg-white justify-between border rounded-2xl p-2 ">
             <img className="rounded-full w-12" src={hdtLogo} alt="" />
-            {/* <div className="text-right text-2xl mr-2 block bg-white w-full rounded-2xl py-2 pl-8  text-gray-900 focus:outline-none">
+            <div className="text-right text-2xl mr-2 block bg-white w-full rounded-2xl py-2 pl-8  text-gray-900 focus:outline-none">
               <span className="text-gray-400 block" id="inputReceive">
-                0.0
+                {splitNumber(currentAssetBalance)}&nbsp; HDT{" "}
               </span>
-            </div> */}
-            <div className=" w-full pl-4 ">
-              <div className="flex justify-between items-center ">
-                <span className="text-xs text-brand-color ">
-                  {splitNumber(assetBalance)}&nbsp; + &nbsp;
-                  {splitNumber(assetRewardBalance)} &nbsp; $HDT
-                </span>
-                <span className="text-xs text-brand-color ">{poolBalance}</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-                <div
-                  className="bg-brand-color h-2.5 rounded-full"
-                  style={{ width: poolBalance }}
-                ></div>
-              </div>
             </div>
           </div>
           {userStatus === 0 ? enterAmountBtn : depositedBtn}
